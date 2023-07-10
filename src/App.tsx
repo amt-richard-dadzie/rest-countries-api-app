@@ -1,5 +1,5 @@
 import { MainRoutes } from "./routes/MainRoutes";
-import { Header } from "./components/Header/Header";
+import { Header } from "./components/Header";
 
 const App = () => {
   return (
