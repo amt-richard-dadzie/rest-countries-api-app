@@ -1,7 +1,6 @@
 import { useRoutes } from "react-router-dom";
-import { Countries } from "../pages/Countries/Countries";
+import { Countries } from "../pages/Countries";
 import { Country } from "../pages/Country";
-import React from "react";
 
 export const MainRoutes = () => {
   return useRoutes([

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const restCountriesApi = axios.create({
-  baseURL: "https://restcountries.com/v3.1/",
+  baseURL: "https://restcountries.com/v2",
 });
 
 export const api = {
@@ -10,15 +10,11 @@ export const api = {
     return response.data;
   },
   getCountry: async (name: string) => {
-    let response = await restCountriesApi.get(
-      `https://restcountries.com/v3.1/name/${name}?fullText=true`
-    );
+    let response = await restCountriesApi.get(`/name/${name}?fullText=true`);
     return response.data;
   },
   getCountryByCode: async (code: string) => {
-    let response = await restCountriesApi.get(
-      `https://restcountries.com/v3.1/alpha/${code}`
-    );
+    let response = await restCountriesApi.get(`/alpha/${code}`);
     return response.data;
   },
 };
