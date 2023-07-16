@@ -14,7 +14,7 @@ export const api = {
     return response.data;
   },
   getCountryByCode: async (code: string) => {
-    let response = await restCountriesApi.get(`/alpha/${code}`);
+    let response = await restCountriesApi.get(`/alpha?codes=${code}`);
     return response.data;
   },
 };

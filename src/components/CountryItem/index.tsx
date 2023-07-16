@@ -11,7 +11,7 @@ export const CountryItem = ({
 }: CountryCard) => {
   return (
     <C.CountryCard>
-      <Link to={`country/${name}`}>
+      <Link to={`/country/${name}`}>
         <div className="flag">
           <img src={flag} alt={`flag of ${name}`} />
         </div>
