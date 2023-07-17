@@ -8,6 +8,7 @@ import { CountryItem } from "../../components/CountryItem";
 export const Countries = () => {
   const [countries, setCountries] = useState<CountriesType[]>([]);
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
 
   const getAllCountries = async () => {
     setLoading(true);
@@ -21,13 +22,18 @@ export const Countries = () => {
     getAllCountries();
   }, []);
 
+  const lowerSearch = search.toLowerCase();
+
+  const filteredCountries = countries.filter((country) =>
+    country.name.toLowerCase().includes(lowerSearch)
+  );
   return (
     <C.CountriesArea>
-      <Input />
+      <Input value={search} handleSearch={setSearch} />
       {loading && <div className="">Loading.....</div>}
       {!loading && (
         <div className="countries">
-          {countries.map((country) => {
+          {filteredCountries.map((country) => {
             return (
               <CountryItem
                 name={country.name}
