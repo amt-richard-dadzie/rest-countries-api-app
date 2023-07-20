@@ -31,12 +31,12 @@ export const CountryData = styled.div`
     p {
       margin: 7px 0;
       span {
-        font-weight: 700;
+        font-weight: 600;
       }
     }
 
     .light {
-      font-weight: 400;
+      font-weight: 300;
     }
 
     .data-border {
@@ -60,7 +60,33 @@ export const CountryData = styled.div`
         box-shadow: 1px 1px 1em rgba(0, 0, 0, 0.2);
       }
       p {
-        font-weight: 700;
+        font-weight: 600;
+      }
+    }
+  }
+  @media (max-width: 430px) {
+    & {
+      grid-template-columns: 1fr;
+      .dt-area {
+        h1 {
+          margin-top: 30px;
+        }
+        .data-basic {
+          grid-template-columns: 1fr;
+
+          .topLevel {
+            margin-top: 30px;
+          }
+        }
+        .data-border {
+          margin-top: 30px;
+          .borders {
+            grid-template-columns: repeat(3, 1fr);
+          }
+          a {
+            font-size: 13px;
+          }
+        }
       }
     }
   }

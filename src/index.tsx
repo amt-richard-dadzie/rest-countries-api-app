@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Routes } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import App from "./App";
 
 const root = ReactDOM.createRoot(
@@ -9,8 +10,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Routes>
-      <App />
-    </Routes>
+    <ThemeProvider>
+      <Routes>
+        <App />
+      </Routes>
+    </ThemeProvider>
   </React.StrictMode>
 );

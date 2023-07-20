@@ -1,6 +1,7 @@
 import * as C from "./styles";
 import { CountryCard } from "../../types/CountryCard";
 import { Link } from "react-router-dom";
+import { useForm } from "../../contexts/ThemeContext";
 
 export const CountryItem = ({
   name,
@@ -9,13 +10,23 @@ export const CountryItem = ({
   capital,
   flag,
 }: CountryCard) => {
+  const { state } = useForm();
+
+  const Styles = {
+    backgroundColor: state.theme === "light" ? "" : "rgb(43, 55, 63)",
+  };
+
+  const StylesData = {
+    color: state.theme === "light" ? "" : "#FFF",
+  };
+
   return (
-    <C.CountryCard>
+    <C.CountryCard style={Styles}>
       <Link to={`/country/${name}`}>
         <div className="flag">
           <img src={flag} alt={`flag of ${name}`} />
         </div>
-        <div className="data">
+        <div className="data" style={StylesData}>
           <p className="country-name">{name}</p>
           <p>
             Population: <span>{population}</span>

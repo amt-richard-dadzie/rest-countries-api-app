@@ -20,11 +20,11 @@ export const CountryCard = styled.div`
     padding: 0 20px;
     .country-name {
       font-size: 20px;
-      font-weight: 900;
+      font-weight: 800;
     }
 
     p {
-      font-weight: 500;
+      font-weight: 600;
       span {
         font-weight: 300;
       }

@@ -1,17 +1,42 @@
+import { useState } from "react";
 import { InputProps } from "../../types/Input";
 import * as C from "./styles";
+import { useForm } from "../../contexts/ThemeContext";
+import useDebounce from "./useDebounce";
 
 export const Input = ({ value, handleSearch }: InputProps) => {
+  const { state } = useForm();
+
+  const [input, setInput] = useState("");
+
+  const debouncedChange = useDebounce(handleSearch, 500);
+
+  const handleChange = (e: string) => {
+    setInput(e);
+    debouncedChange(e);
+  };
+
+  const Styles = {
+    backgroundColor: state.theme === "light" ? "" : "rgb(43, 55, 67)",
+    color: state.theme === "light" ? "" : "#FFF",
+    transition: "all ease 0.3s",
+  };
+
   return (
     <C.InputArea>
       <input
         type="text"
         placeholder="Search by Country"
-        value={value}
-        onChange={(e) => handleSearch(e.target.value)}
+        value={input}
+        onChange={(e) => handleChange(e.target.value)}
+        style={Styles}
       />
-      <select onChange={(e) => handleSearch(e.target.value)}>
-        <option value="fliter by region" disabled selected>
+      <select
+        style={Styles}
+        defaultValue=""
+        onChange={(e) => handleChange(e.target.value)}
+      >
+        <option disabled hidden value="">
           Filter by region
         </option>
         <option value="Africa">Africa</option>

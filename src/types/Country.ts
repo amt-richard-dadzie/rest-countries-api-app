@@ -1,6 +1,7 @@
 export interface CountryType {
   name: string;
   nativeName: string;
+  numericCode: number;
   population: number;
   region: string;
   capital: string;
