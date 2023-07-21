@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { CountriesType } from "../../types/Countries";
 import { api } from "../../http";
 import { useForm } from "../../contexts/ThemeContext";
-import { Input } from "../../components/Input";
+import { Input } from "../../components/input";
 import { CountryItem } from "../../components/CountryItem";
 
 export const Countries = () => {
