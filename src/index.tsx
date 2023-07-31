@@ -3,6 +3,7 @@ import { BrowserRouter as Routes } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { CountriesProvider } from "./contexts/CountriesContext";
 import App from "./App";
 
 const root = ReactDOM.createRoot(
@@ -11,9 +12,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <ThemeProvider>
-      <Routes>
-        <App />
-      </Routes>
+      <CountriesProvider>
+        <Routes>
+          <App />
+        </Routes>
+      </CountriesProvider>
     </ThemeProvider>
   </React.StrictMode>
 );

@@ -1,20 +1,17 @@
-import { useState } from "react";
 import { InputProps } from "../../types/Input";
 import * as C from "./styles";
 import { useForm } from "../../contexts/ThemeContext";
-import useDebounce from "./useDebounce";
+import { HiOutlineSearch } from "react-icons/hi";
 
-export const Input = ({ value, handleSearch }: InputProps) => {
+const continents = ["", "Africa", "America", "Asia", "Europe", "Oceania"];
+
+export const Input = ({
+  selectedItem,
+  handleSelectedItemChange,
+  inputValue,
+  setInputValue,
+}: InputProps) => {
   const { state } = useForm();
-
-  const [input, setInput] = useState("");
-
-  const debouncedChange = useDebounce(handleSearch, 500);
-
-  const handleChange = (e: string) => {
-    setInput(e);
-    debouncedChange(e);
-  };
 
   const Styles = {
     backgroundColor: state.theme === "light" ? "" : "rgb(43, 55, 67)",
@@ -24,26 +21,26 @@ export const Input = ({ value, handleSearch }: InputProps) => {
 
   return (
     <C.InputArea>
-      <input
-        type="text"
-        placeholder="Search by Country"
-        value={input}
-        onChange={(e) => handleChange(e.target.value)}
-        style={Styles}
-      />
+      <div className="inputField" style={Styles}>
+        <HiOutlineSearch size="1.5em" />
+        <input
+          type="text"
+          placeholder="Search by Country"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          style={Styles}
+        />
+      </div>
       <select
         style={Styles}
-        defaultValue=""
-        onChange={(e) => handleChange(e.target.value)}
+        value={selectedItem}
+        onChange={(e) => handleSelectedItemChange(e.target.value)}
       >
-        <option disabled hidden value="">
-          Filter by region
-        </option>
-        <option value="Africa">Africa</option>
-        <option value="America">America</option>
-        <option value="Asia">Asia</option>
-        <option value="Europe">Europe</option>
-        <option value="Oceania">Oceania</option>
+        {continents.map((item, index) => (
+          <option key={`${item}${index}`} value={item}>
+            {item || "Filter by Region"}
+          </option>
+        ))}
       </select>
     </C.InputArea>
   );

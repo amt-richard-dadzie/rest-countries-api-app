@@ -1,40 +1,31 @@
 import * as C from "./styles";
-import { useState, useEffect } from "react";
-import { CountriesType } from "../../types/Countries";
-import { api } from "../../http";
+import { useState } from "react";
 import { useForm } from "../../contexts/ThemeContext";
+import useCountries from "../../contexts/CountriesContext";
 import { Input } from "../../components/Input";
 import { CountryItem } from "../../components/CountryItem";
+import { numberWithCommas } from "../Country/index";
 
 export const Countries = () => {
   const { state } = useForm();
 
-  const [countries, setCountries] = useState<CountriesType[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [search, setSearch] = useState("");
+  const { countries, isState } = useCountries();
+  const [selectedItem, setSelectedItem] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
-  const getAllCountries = async () => {
-    try {
-      setLoading(true);
-      let response = await api.getCountries();
-      setCountries(response);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //Update the selectedItem with it new state
+  function handleSelectedItemChange(selectedItem: string) {
+    setSelectedItem(selectedItem);
+  }
 
-  useEffect(() => {
-    getAllCountries();
-  }, []);
-
-  const lowerSearch = search.toLowerCase();
-
-  const filteredCountries = countries.filter(
-    (country) =>
-      country.name.toLowerCase().includes(lowerSearch) ||
-      country.region.toLowerCase().includes(lowerSearch)
-  );
+  //Filtering countries data by searching country name or selecting country region
+  const filteredCountries = countries
+    .filter((country) =>
+      country.name.toLowerCase().includes(inputValue.toLowerCase())
+    )
+    .filter((country) => {
+      return country.region.toLowerCase().includes(selectedItem.toLowerCase());
+    });
 
   const Styles = {
     backgroundColor: state.theme === "light" ? "" : "rgb(32, 45, 54)",
@@ -44,16 +35,21 @@ export const Countries = () => {
 
   return (
     <C.CountriesArea style={Styles}>
-      <Input value={search} handleSearch={setSearch} />
-      {loading && <div className="loading">Loading.....</div>}
-      {!loading && (
+      <Input
+        selectedItem={selectedItem}
+        handleSelectedItemChange={handleSelectedItemChange}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+      />
+      {isState === "loading" && <div className="loading">Loading.....</div>}
+      {isState === "resolved" && (
         <div className="countries">
           {filteredCountries.map((country) => {
             return (
               <CountryItem
                 key={country.numericCode}
                 name={country.name}
-                population={country.population}
+                population={numberWithCommas(country.population)}
                 region={country.region}
                 capital={country.capital}
                 flag={country.flags.png}

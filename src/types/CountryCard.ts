@@ -1,6 +1,6 @@
 export interface CountryCard {
   name: string;
-  population: number;
+  population: string;
   region: string;
   capital: string;
   flag: string;

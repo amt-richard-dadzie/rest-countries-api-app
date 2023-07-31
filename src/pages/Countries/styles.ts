@@ -8,7 +8,7 @@ export const CountriesArea = styled.main`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-row-gap: 80px;
-    grid-column-gap: 40px;
+    grid-column-gap: 80px;
     margin-top: 20px;
   }
   .loading {

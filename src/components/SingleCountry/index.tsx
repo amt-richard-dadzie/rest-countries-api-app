@@ -2,6 +2,7 @@ import * as C from "./styles";
 import { SingleCountryTS } from "../../types/SingleCountry";
 import { Link } from "react-router-dom";
 import { useForm } from "../../contexts/ThemeContext";
+import useCountries from "../../contexts/CountriesContext";
 
 export const SingleCountry = ({
   name,
@@ -18,15 +19,15 @@ export const SingleCountry = ({
 }: SingleCountryTS) => {
   const { state } = useForm();
 
+  const { findByCode } = useCountries();
+
   const StylesData = {
     backgroundColor: state.theme === "light" ? "" : "rgb(43, 55, 67)",
     color: state.theme === "light" ? "#000" : "#FFF",
   };
   return (
     <C.CountryData>
-      <div className="img-area">
-        <img src={flag} alt={`flag of ${name}`} />
-      </div>
+      <img src={flag} alt={`flag of ${name}`} />
       <div className="dt-area">
         <h1>{name}</h1>
         <div className="data-basic">
@@ -74,6 +75,7 @@ export const SingleCountry = ({
               {languages.map((item, index) => (
                 <span className="light" key={index}>
                   {item.name}
+                  {index < languages.length - 1 ? ", " : ""}
                 </span>
               ))}
             </p>
@@ -83,11 +85,21 @@ export const SingleCountry = ({
           <div className="data-border">
             <p>Border Countries: </p>
             <div className="borders">
-              {borders.map((item, index) => (
-                <Link to={`/code/${item}`} key={index} style={StylesData}>
-                  {item}
-                </Link>
-              ))}
+              {borders.map((code, index) => {
+                const countryName = findByCode(code);
+                if (!countryName) {
+                  return <span>Loading..</span>;
+                }
+                return (
+                  <Link
+                    to={`/country/${countryName.name}`}
+                    key={index}
+                    style={StylesData}
+                  >
+                    {countryName.name}
+                  </Link>
+                );
+              })}
             </div>
           </div>
         )}

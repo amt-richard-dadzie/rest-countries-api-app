@@ -1,43 +1,28 @@
 import { Link, useParams } from "react-router-dom";
 import * as C from "./styles";
-import { useCallback, useEffect, useState } from "react";
-import { api } from "../../http";
-import { CountryType } from "../../types/Country";
 import { SingleCountry } from "../../components/SingleCountry";
 import { useForm } from "../../contexts/ThemeContext";
+import useCountries from "../../contexts/CountriesContext";
 import { BiArrowBack } from "react-icons/bi";
+import { useMemo } from "react";
+
+export function numberWithCommas(x: number): string {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 export const Country = () => {
   const { state } = useForm();
 
-  const { name, code } = useParams();
+  const { name } = useParams();
 
-  const [country, setCountry] = useState<CountryType[]>([]);
-  const [loading, setLoading] = useState(false);
+  const { findCountryByName } = useCountries();
 
-  const getCountry = useCallback(
-    async (params: string) => {
-      try {
-        setLoading(true);
-        let response = name
-          ? await api.getCountry(params)
-          : await api.getCountryByCode(params);
-        setCountry(response);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    [name]
-  );
-
-  useEffect(() => {
+  const country = useMemo(() => {
     if (name) {
-      getCountry(name);
-    } else if (code) {
-      getCountry(code);
+      return findCountryByName(name);
     }
-  }, [name, code, getCountry]);
+    return null;
+  }, [findCountryByName, name]);
 
   const Styles = {
     backgroundColor: state.theme === "light" ? "" : "rgb(32, 45, 54)",
@@ -56,25 +41,24 @@ export const Country = () => {
           <BiArrowBack size="1.4em" />
           <span>Back</span>
         </Link>
-        {loading && <div className="loading">Loading......</div>}
-        {country.map((data) => {
-          return (
-            <SingleCountry
-              key={data.numericCode}
-              name={data.name}
-              nativeName={data.nativeName}
-              population={data.population}
-              capital={data.capital}
-              flag={data.flags.png}
-              region={data.region}
-              subregion={data.subregion}
-              topLevelDomain={data.topLevelDomain[0]}
-              currencies={data.currencies && data.currencies}
-              languages={data.languages}
-              borders={data.borders}
-            />
-          );
-        })}
+        {country ? (
+          <SingleCountry
+            key={country.numericCode}
+            name={country.name}
+            nativeName={country.nativeName}
+            population={numberWithCommas(country.population)}
+            capital={country.capital}
+            flag={country.flags.png}
+            region={country.region}
+            subregion={country.subregion}
+            topLevelDomain={country.topLevelDomain[0]}
+            currencies={country.currencies && country.currencies}
+            languages={country.languages}
+            borders={country.borders}
+          />
+        ) : (
+          <div>Loading...</div>
+        )}
       </div>
     </C.CountryPage>
   );

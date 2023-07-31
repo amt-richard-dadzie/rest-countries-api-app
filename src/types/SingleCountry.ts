@@ -1,7 +1,7 @@
 export interface SingleCountryTS {
   name: string;
   nativeName: string;
-  population: number;
+  population: string;
   region: string;
   subregion: string;
   capital: string;

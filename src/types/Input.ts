@@ -1,4 +1,6 @@
 export interface InputProps {
-  value: string;
-  handleSearch: (e: string) => void;
+  selectedItem: string;
+  handleSelectedItemChange: (selectedItem: string) => void;
+  inputValue: string;
+  setInputValue: (inputValue: string) => void;
 }

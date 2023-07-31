@@ -5,21 +5,28 @@ export const InputArea = styled.section`
   justify-content: space-between;
   padding: 20px 0px;
 
-  input {
+  .inputField {
+    display: flex;
+    box-shadow: 2px 2px 1em rgba(0, 0, 0, 0.2);
     width: 30rem;
+    align-items: center;
+    padding-left: 15px;
+    border-radius: 5px;
+  }
+
+  input {
     outline: none;
+    width: 100%;
     border: none;
     padding: 15px 10px;
-    border-radius: 2px;
-    box-shadow: 2px 2px 1em rgba(0, 0, 0, 0.2);
     font-size: 16px;
   }
 
   select {
     border: none;
-    outline: 0;
+    outline: none;
     padding: 10px;
-    border-radius: 2px;
+    border-radius: 5px;
     box-shadow: 2px 2px 1em rgba(0, 0, 0, 0.2);
     font-size: 14px;
   }
@@ -28,8 +35,10 @@ export const InputArea = styled.section`
     & {
       flex-direction: column;
       margin-inline: -10px;
-      input {
+      .inputField {
         width: 93%;
+      }
+      input {
         padding: 15px 10px;
       }
       select {
