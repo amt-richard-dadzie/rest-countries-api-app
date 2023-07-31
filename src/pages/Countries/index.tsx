@@ -2,7 +2,7 @@ import * as C from "./styles";
 import { useState } from "react";
 import { useForm } from "../../contexts/ThemeContext";
 import useCountries from "../../contexts/CountriesContext";
-import { Input } from "../../components/Input";
+import { Input } from "../../components/input";
 import { CountryItem } from "../../components/CountryItem";
 import { numberWithCommas } from "../Country/index";
 
